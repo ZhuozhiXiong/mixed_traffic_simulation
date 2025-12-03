@@ -1,7 +1,69 @@
-# Mixed traffic flow simulation with CARLA simulator
-## Overview
-&emsp;&emsp;With the development of Connected Automated Vehicle (CAV) technology, mixed traffic consisting of Human-Driven Vehicles (HDVs) and CAVs will exist for a long time. Therefore, mixed traffic simulation is important in autonomous driving testing, microscopic traffic charateristics analysis, traffic management strategy evaluation, etc. However, current simulation platforms fail to satisfy the requirements of complex environment and realistic traffic simulation. This program develops a mixed traffic simulation platform driven by microscopic traffic flow models and coupled with the platoon-based cooperative control strategy based on CARLA simulator. In this platform, traffic flow are modeled from car-following and lane-change behaviors. The IDM car-following model and MOBIL lane-change model are introduced for HDVs. The ACC and CACC car-following models are introduced for CAVs following different types of vehicles. A discretionary lane-change model that considers differences of desired time gaps following different types of vehicles is proposed for CAVs. Besides, a mandatory lane-change model that integrates safety and timeliness is also designed. On this basis, we design modules like traffic generation with customized parameters, traffic operation driven by microscopic models, and multidimensional evaluation of traffic conditions based on CARLA simulator. Besides, a longitudinal platoon control strategy using linear feedback control is established for CAVs on the dedicated lanes and a platoon-based cooperative control module is added to the platform. This paper was published on Expert Systems with Applications (https://doi.org/10.1016/j.eswa.2025.127027).
-## Simulation structure of the platform
-![image](DCAVL/Platform_structure.png)
-## Simulation scenario: a case study
-![image](DCAVL/Simulation_scenario.png)
+# Mixed Traffic Flow Simulation Platform based on CARLA
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/)
+[![CARLA](https://img.shields.io/badge/CARLA-Simulator-green.svg)](https://carla.org/)
+
+## 📖 Overview
+
+With the development of Connected Automated Vehicle (CAV) technology, mixed traffic consisting of Human-Driven Vehicles (HDVs) and CAVs will exist for a long time. Mixed traffic simulation is crucial for autonomous driving testing, microscopic characteristic analysis, and traffic management strategy evaluation.
+
+This project develops a high-fidelity **mixed traffic simulation platform** driven by microscopic traffic flow models and coupled with platoon-based cooperative control strategies, built upon the **CARLA simulator**.
+
+### Key Features
+* **Microscopic Modeling:**
+    * **HDVs:** Implemented using the **IDM** (Intelligent Driver Model) for car-following and **MOBIL** for lane-changing.
+    * **CAVs:** Implemented using **ACC** (Adaptive Cruise Control) and **CACC** (Cooperative ACC) models depending on the preceding vehicle type.
+* **Advanced Lane Change Logic:**
+    * **DLC (Discretionary Lane-Change):** A model for CAVs that considers the differences in desired time gaps when following different vehicle types.
+    * **MLC (Mandatory Lane-Change):** A model optimized for off-ramp scenarios integrating safety and timeliness.
+* **Cooperative Control:** A longitudinal **platoon control strategy** using linear feedback control for CAVs on Dedicated Lanes (DLs).
+* **Comprehensive Evaluation:** Multidimensional evaluation metrics including Safety (MTTC, DRAC), Efficiency (Throughput, Speed), and Environmental Impact (Fuel, Emissions).
+
+---
+
+## 🏗️ Simulation Structure
+![Platform Structure](DCAVL/Platform_structure.png)
+
+As shown in the figure above, the simulation platform consists of three core modules:
+
+1.  **Traffic Generator:** Generates mixed traffic flow with customizable parameters such as Market Penetration Rate (MPR), flow volume, and destination distribution.
+2.  **Mixed Traffic Flow Operation:**
+    * **Self-Driving System:** Adopts a perception-planning-control architecture.
+    * **Platoon-Based Cooperative Control:** Manages platoon formation, merging, splitting, and cooperative longitudinal control on Dedicated Lanes.
+    * **Vehicle Register:** Records real-time trajectories and states of all vehicles.
+3.  **Traffic Evaluation:** A post-processing module that assesses the traffic performance based on the recorded data from multiple dimensions (Safety, Efficiency, Environment).
+
+---
+
+## 🚗 Simulation Scenario: A Case Study
+![Simulation Scenario](DCAVL/Simulation_scenario.png)
+
+To validate the models and strategies, we constructed a **one-way three-lane highway scenario** with an off-ramp in CARLA:
+
+* **Lane Configuration:**
+    * **Lane 1 (Innermost):** Designated as the **Dedicated Lane (DL)** for CAVs (when the DL policy is active).
+    * **Lane 2 & 3:** Shared lanes for both HDVs and CAVs.
+* **Zonal Analysis:** The road segment is divided into three regions to analyze traffic behavior in detail:
+    * **Region 1:** Upstream free-flow area.
+    * **Region 2 (Influence Zone):** The critical area (-500m to 500m) where vehicles perform mandatory lane changes to exit via the off-ramp.
+    * **Region 3:** Downstream area.
+* **Traffic Generation:** Vehicles are spawned at -3000m and stabilize their flow by -2000m. The simulation covers a 4km stretch of highway operations.
+
+---
+
+## 📝 Citation
+
+If you find this code or paper useful for your research, please cite our paper:
+
+```bibtex
+@article{xiong2025modelling,
+  title={Modelling and simulation of mixed traffic flow with dedicated lanes for connected automated vehicles},
+  author={Xiong, Zhuozhi and Hu, Pei and Li, Ni and Chen, Xu and Chen, Wang and Wang, Hao and Xie, Ning and Li, Ye and Dong, Changyin},
+  journal={Expert Systems with Applications},
+  volume={274},
+  pages={127027},
+  year={2025},
+  publisher={Elsevier},
+  doi={10.1016/j.eswa.2025.127027}
+}
