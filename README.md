@@ -50,6 +50,9 @@ To validate the models and strategies, we constructed a **one-way three-lane hig
     * **Region 3:** Downstream area.
 * **Traffic Generation:** Vehicles are spawned at -3000m and stabilize their flow by -2000m. The simulation covers a 4km stretch of highway operations.
 
+The simulation is presented as follows:
+![Simulation](DCAVL/off-ramp.gif)
+
 ---
 
 ## 📝 Citation
